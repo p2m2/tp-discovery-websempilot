@@ -1,0 +1,37 @@
+---
+title: "Discovery workout"
+subtitle: "Get Started"
+author:
+  - name: "**Olivier FILANGI**"
+    orcid: 0000-xxxx-xxxx-xxxx
+    email: olivier.filangi@inrae.fr
+    url: https://lien-site.fr
+  - name: Marcellino PALERME
+    email: marcellino.palerme@inrae.fr
+    orcid: 0000-xxxx-xxxx-xxxx
+date: today
+date-format: long
+format: 
+  inrae-revealjs: 
+    scrollable: true
+    lang: fr
+    footer: ""
+---
+## nothing {visibility="hidden"}
+<!-- Introduce animators -->
+{{< include _animators.qmd >}}
+<!-- Introduce discovery -->
+{{< include _discovery.qmd >}}
+<!-- 1. Count ressources -->
+{{< include _count_ressource.qmd >}}
+<!-- 2. Find object or subject-->
+{{< include _get_object.qmd >}}
+<!-- 3. Get label of ressource and add endpoint sparql -->
+{{< include _datatype_endpoint.qmd >}}
+<!-- 4. increase UX by lazy load -->
+{{< include _ux.qmd >}}
+<!-- Others function  -->
+{{< include _serialize.qmd >}}
+{{< include _help_console.qmd >}}
+<!-- thanks -->
+{{< include _thx.qmd >}}

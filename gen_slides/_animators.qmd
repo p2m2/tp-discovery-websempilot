@@ -1,0 +1,21 @@
+# Animators
+::: columns
+::: {.column width="50%"}
+**Olivier FILANGI**  
+Software engineer  
+Discovery's creator  
+:::
+::: {.column width="50%"}
+**Marcellino PALERME**  
+Software assistant engineer
+:::
+:::
+:::{.absolute left=400 width=200}
+![](./images/igepp.png){width="200%"}
+:::
+::: {.absolute left=400 top=430}
+`RCA team`
+:::
+::: {.absolute left=400 width=200 top=500}
+![](./images/p2m2.png)
+:::

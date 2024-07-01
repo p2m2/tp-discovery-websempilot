@@ -1,0 +1,85 @@
+# Get Object
+## Goal
+Find all objects is related with hydroxyoctanoate (ChEBI ID = CHEBI:133719)
+
+::: {.absolute left=50 top=200 width="50" height="250" style="font-size:70pt; "}
+`Subject`
+:::
+::: {.absolute left=480 top=135 width="250" height="250" style="font-size:145pt; "}
+`→`
+:::
+::: {.absolute left=300 top=350 width="50" height="250" style="font-size:70pt; "}
+`predicate`
+:::
+::: {.absolute left=750 top=200 width="50" height="250" style="font-size:70pt; "}
+Object
+:::
+
+
+## Code
+-JS
+```{.js code-line-numbers="2,3|4|5,6|7-9|10-14"}
+SWDiscovery(config)
+    .prefix("chebi","http://purl.obolibrary.org/obo/CHEBI_")
+    .prefix("skos","http://www.w3.org/2004/02/skos/core#")
+    .something("some")
+       .set(URI("chebi:133719"))
+         .isSubjectOf(URI("skos:related"),"objetMeshTerm")
+    .select("objetMeshTerm")
+    .commit()
+    .raw()
+    .then((response) => {
+        message = "<p>termes mesh associés à chebi:133719 ->"+response.results.bindings.length + "</p><ul>" ;
+        for (const binding of response.results.bindings) {
+            message +=`<li> ${binding["objetMeshTerm"].value} </li>`;
+        }
+        message += "</ul>"
+        isOK(message);
+```
+
+## Execute
+<br>
+```{=html}
+<iframe 
+   src="./samples/get_objects.html" 
+   width="500"
+   height="400">
+</iframe>
+```
+
+## Exercice
+
+* Get all compounds related to "Acid, Acyclic" in CID RDF database
+    + "Acid, Acyclic" => mesh terme D000144
+    + isObjectOf
+
+## Solution
+```{.js}
+SWDiscovery(config)
+    .prefix("mesh","http://id.nlm.nih.gov/mesh/")
+    .prefix("skos","http://www.w3.org/2004/02/skos/core#")
+    .something("some")
+       .set(URI("mesh:D000144"))
+         .isObjectOf(URI("skos:related"),"compounds")
+    .select("compounds")
+    .commit()
+    .raw()
+    .then((response) => {
+        message = "<p>Suject related mesh D000144 ->"+response.results.bindings.length + "</p><ul>" ;
+        for (const binding of response.results.bindings) {
+            message +=`<li> ${binding["compounds"].value} </li>`;
+        }
+        message += "</ul>"
+        isOK(message);
+```
+. . .
+
+::: {.absolute right=0 top=200 style="background: white;"}
+```{=html}
+<iframe 
+   src="./solutions/get_subjects.html" 
+   width="600"
+   height="300">
+</iframe>
+```
+:::

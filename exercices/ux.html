@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UX</title>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/p2m2/discovery@0.4.3/dist/discovery-web.min.js"> </script> 
+<script type="text/javascript" src="../utils/display.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+.progress-bar {
+            width: 0;
+            height: 30px;
+            background-color: #4caf50;
+            border-radius: 5px;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+        }
+</style>
+<body>
+
+  <div id="icon-container">
+      <i id="status-icon" class="icon fas fa-spinner fa-spin"></i>
+  </div>
+  
+  <div id="status-message"></div>
+
+  <h1>Resultats</h1>
+  <div class="progress-container">
+    <div class="progress-bar" id="progress-bar">0%</div>
+  </div>
+
+  <div id="data-container"></div>
+<nav>
+    <button onclick="load(currentPage+1)">Prev.</button> 
+    <button onclick="load(currentPage+1)">Next</button> 
+</nav>
+
+</body>
+
+<script>
+const showData = document.getElementById('data-container');
+const messageElement = document.getElementById('status-message');
+const rowsPerPage = 5;
+let currentPage = 0;
+let lazyLoadedPages = [];
+let nbPages = 0 ;
+let dataQuery = []; 
+
+// your code
+
+
+</script>
+</html>    

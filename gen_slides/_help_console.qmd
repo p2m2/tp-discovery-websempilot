@@ -1,0 +1,16 @@
+# Help and request
+
+## Goal
+- Know called methods of ressources
+- Explain and obtain sparql request
+
+## Code 
+```{.js code-line-numbers="|3|5"}
+.something("some")
+   .set(URI("chebi:133719"))
+      .helper();
+      .isSubjectOf(URI("skos:related"),"objetMeshTerm")
+      .console()      
+```
+
+[sample](./samples/help_console.html) 

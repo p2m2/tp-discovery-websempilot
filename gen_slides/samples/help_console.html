@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>helper Console</title>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/p2m2/discovery@0.4.3/dist/discovery-web.min.js"> </script> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        .icon {
+            font-size: 2em;
+        }
+    </style>
+
+<body>
+
+  <div id="icon-container">
+      <i id="status-icon" class="icon fas fa-spinner fa-spin"></i>
+  </div>
+
+  <div id="status-message">En attente...</div>
+</body>
+  
+<script>
+      var config = SWDiscoveryConfiguration
+                    .init()
+                    .urlFile("https://raw.githubusercontent.com/p2m2/tp-discovery-websempilot/main/rdf/triples_assos_CHEBI_MESH_sub.ttl");
+
+      const iconElement = document.getElementById('status-icon');
+      const messageElement = document.getElementById('status-message');
+
+      SWDiscovery(config)
+          .prefix("chebi","http://purl.obolibrary.org/obo/CHEBI_")
+          .prefix("skos","http://www.w3.org/2004/02/skos/core#")
+          .something("some")
+            .set(URI("chebi:133719"))
+            .helper()
+             .isSubjectOf(URI("skos:related"),"objetMeshTerm")
+             .select("objetMeshTerm")
+             .console()
+             .commit()
+             .raw()
+             .then((response) => {
+                iconElement.className = 'icon fas fa-check-circle';
+                iconElement.style.color = 'green';
+                message = "<p>termes mesh associés à chebi:133719 ->"+response.results.bindings.length + "</p>" ;
+                message += "<li>"
+                for (let i=0;i<response.results.bindings.length;i++) {
+                  let mesh=response.results.bindings[i]["objetMeshTerm"].value;
+                  message += "<ul>" + mesh + "</ul>" ;
+                }
+                message += "</li>"
+                messageElement.innerHTML = message;
+                messageElement.style.color = 'green';
+              }
+            ).catch( (error) => {
+                iconElement.className = 'icon fas fa-times-circle';
+                iconElement.style.color = 'red';
+                messageElement.textContent = error;
+                messageElement.style.color = 'red';
+            } );
+ </script>
+ </html>    

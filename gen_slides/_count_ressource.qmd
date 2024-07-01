@@ -1,0 +1,103 @@
+# Count Ressouce
+
+## Goal
+::: {.absolute left=50 top=200 width="50" height="250" style="font-size:70pt; "}
+Subject
+:::
+::: {.absolute left=400 top=135 width="250" height="250" style="font-size:150pt; "}
+→
+:::
+::: {.absolute left=350 top=350 width="50" height="250" style="font-size:70pt; "}
+predicate
+:::
+::: {.absolute left=750 top=200 width="50" height="250" style="font-size:70pt; "}
+Object
+:::
+
+## Goal
+::: {.absolute left=50 top=200 width="50" height="250" style="font-size:70pt; "}
+Subject
+:::
+::: {.absolute left=400 top=135 width="250" height="250" style="font-size:150pt; "}
+→
+:::
+::: {.absolute left=350 top=350 width="50" height="250" style="font-size:70pt; "}
+predicate
+:::
+::: {.absolute left=750 top=200 width="50" height="250" style="font-size:70pt; "}
+Object
+:::
+
+Each part of triple is a ressource.
+
+We want to know how many ressources we have.
+
+## Code
+
+- Javascript
+```{.js code-line-numbers="1,2|3,4|6,7|8-10|12,13"}
+var config = SWDiscoveryConfiguration
+ .init()
+ .urlFile(`https://raw.githubusercontent.com/p2m2/tp-discovery-websempilot/
+           main/rdf/triples_assos_CHEBI_MESH_sub.ttl`);
+
+SWDiscovery(config)
+    .something("some")
+    .select("some")
+        .commit()
+        .raw()
+        .then((response) => {
+            // Show number of triple
+            console.log("count: "+response.results.bindings.length)
+            }
+      ).catch( (error) => {
+        console.error(" -- catch exception --")
+        console.error(error)
+      } );
+```
+
+## Execute
+<br>
+```{=html} 
+<iframe 
+   src="./samples/count_ressources.html" 
+   width="200"
+   height="100">
+</iframe>
+```
+
+## Exercice
+
+* Count ressources of CID RDF Database.
+  + https://raw.githubusercontent.com/p2m2/tp-discovery-websempilot/main/rdf/triples_assos_CID_MESH_sub.ttl
+  + In variable "allRessources"
+
+## Solution
+```{.js}
+var config = SWDiscoveryConfiguration
+ .init()
+ .urlFile(`https://raw.githubusercontent.com/p2m2/tp-discovery-websempilot/
+           main/rdf/triples_assos_CID_MESH_sub.ttl`);
+
+SWDiscovery(config)
+  .something("allRessources")
+  .select("allRessources")
+      .commit()
+      .raw()
+      .then((response) => {
+          // Show number of triple
+          isOk("count:"+response.results.bindings.length)
+      }
+      ).catch( (error) => {
+        isKo(error)
+      });
+```
+::: {.absolute left=750 top=200}
+```{=html}
+<iframe 
+   src="./solutions/count_ressources.html" 
+   width="200"
+   height="100">
+</iframe>
+```
+:::

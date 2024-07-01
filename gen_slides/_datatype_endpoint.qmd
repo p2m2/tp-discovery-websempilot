@@ -1,0 +1,84 @@
+# Sparql Endpoint and Datatype
+
+## Goal
+- Send request to RDF database on web
+- Know caracteristic of a ressources
+
+## Code
+- JavaScript
+
+```{.js code-line-numbers="3|10|11-13|16-19|17|18"}
+var config = SWDiscoveryConfiguration
+    .init()
+    .sparqlEndpoint("https://metabolights.semantic-metabolomics.fr/sparql");
+
+SWDiscovery(config)
+    .prefix("metabolights","https://www.ebi.ac.uk/metabolights/property#")
+    .prefix("rdfs","http://www.w3.org/2000/01/rdf-schema#")
+    .something()
+        .isObjectOf(URI("metabolights:Xref"),"var_study")
+            .datatype(URI("rdfs:label"),"var_label")
+    .select("var_study", "var_label")
+        .commit()
+        .raw()
+    .then((response)=>{
+        let message = "<ul>"
+        for (let i=0;i<response.results.bindings.length;i++) {
+            let study=response.results.bindings[i]["var_study"].value;
+            let label=response.results.datatypes["var_label"][study][0].value; 
+            message +=`<li> ${study} is ${label}</li>`;
+        }
+        message += "</ul>"
+        isOK(message);
+    })
+```
+
+## Execute
+<br>
+```{=html}
+<iframe 
+   src="./samples/datatype_endpoint.html"
+   width="800"
+   height="400"
+></iframe>
+```
+
+## Exercice 
+
+* Use sparql endpoint of `FORUM` (https://forum.semantic-metabolomics.fr/sparql/)
+* Get information on chebi:27732
+    + Synonym (http://purl.obolibrary.org/obo/chebi/formula)
+    + Formula (http://www.geneontology.org/formats/oboInOwl#hasExactSynonym)
+
+## Solution
+```{.js code-line-numbers="3|8|9|10|11-13|15|16|17|18"}
+var config = SWDiscoveryConfiguration
+  .init()
+  .sparqlEndpoint("https://forum.semantic-metabolomics.fr/sparql/");
+
+SWDiscovery(config)
+  .prefix("chebi","http://purl.obolibrary.org/obo/CHEBI_")
+  .something("var_study")
+    .set(URI("chebi:27732"))
+      .datatype(URI("http://purl.obolibrary.org/obo/chebi/formula"),"var_formula")
+      .datatype(URI("http://www.geneontology.org/formats/oboInOwl#hasExactSynonym"),"var_name")
+  .select("var_study", "var_formula", "var_name")
+    .commit()
+    .raw()
+  .then((response)=>{
+    let study=response.results.bindings[0]["var_study"].value;
+    let formula=response.results.datatypes["var_formula"][study][0].value; 
+    let name = response.results.datatypes["var_name"][study][0].value;
+    isOK(`${name} : #Ref -> ${study}  #Formula -> ${formula}`);
+  })
+```
+
+. . .
+
+```{=html}
+<iframe 
+   src="./solutions/datatype_endpoint.html"
+   width="1000"
+   height="100"
+></iframe>
+```

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/p2m2/discovery@0.4.3/dist/discovery-web.min.js"> </script> 
+</head>
+<body id="status-message">
+</body>
+  
+<script>
+    const messageElement = document.getElementById('status-message');
+
+    var config = SWDiscoveryConfiguration
+                    .init()
+                    .rdfContent(`
+                    @prefix mesh: <http://id.nlm.nih.gov/mesh/> .
+                    mesh:D005227 <http://myapp/is_selected> true .
+                    mesh:D002332 <http://myapp/is_selected> true .
+                    mesh:D005502 <http://myapp/is_selected> true .
+                    mesh:D009414 <http://myapp/is_selected> true .
+                    mesh:D009416 <http://myapp/is_selected> true .
+                    mesh:D009420 <http://myapp/is_selected> true .
+                    mesh:D009422 <http://myapp/is_selected> true .
+                    mesh:D009424 <http://myapp/is_selected> true .
+                    mesh:D009431 <http://myapp/is_selected> true .
+                    `)
+                    .urlFile("https://raw.githubusercontent.com/p2m2/tp-discovery-websempilot/main/rdf/triples_assos_CHEBI_MESH_sub.ttl")
+                    .urlFile("https://raw.githubusercontent.com/p2m2/tp-discovery-websempilot/main/rdf/triples_assos_MESH_MESH_sub.ttl")
+                    .urlFile("https://raw.githubusercontent.com/p2m2/tp-discovery-websempilot/main/rdf/triples_assos_CID_MESH_sub.ttl")
+                    ;
+   
+    messageElement.textContent =encodeURIComponent(SWDiscovery(config)
+          .prefix("chebi","http://purl.obolibrary.org/obo/CHEBI_")
+          .prefix("skos","http://www.w3.org/2004/02/skos/core#")
+          .something("metabolite")
+             .setDecoration("info","Metabolites qui sont reliés à mesh:D005227")
+             .isSubjectOf(URI("skos:related"),"objetMeshTerm")
+                .isSubjectOf(URI("<http://myapp/is_selected>"))
+                  .set(Literal("true",URI("xsd:boolean")))
+                  .getSerializedString());
+
+ </script>
+ </html>    

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Subject</title>
+
+<script 
+    type="text/javascript" 
+    src="https://cdn.jsdelivr.net/gh/p2m2/discovery@0.4.3/dist/discovery-web.min.js"> 
+</script> 
+<link 
+    rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+>
+<style>
+    .icon {
+        font-size: 2em;
+    }
+</style>
+
+<body>
+  <div id="icon-container">
+      <i id="status-icon" class="icon fas fa-spinner fa-spin"></i>
+  </div>
+  <div id="status-message">En attente...</div>
+</body>
+  
+<script>
+    var config = SWDiscoveryConfiguration
+        .init()
+        .urlFile("https://raw.githubusercontent.com/p2m2/tp-discovery-websempilot/main/rdf/triples_assos_CID_MESH_sub.ttl");
+
+    SWDiscovery(config)
+      .prefix("mesh","http://id.nlm.nih.gov/mesh/")
+      .prefix("skos","http://www.w3.org/2004/02/skos/core#")
+      .something("some")
+        .set(URI("mesh:D000144"))
+         .isObjectOf(URI("skos:related"),"var_compounds")
+      .select("var_compounds")
+      .commit()
+      .raw()
+    .then((response) => {
+      message = "<p>termes mesh associés à chebi:133719 ->"+response.results.bindings.length + "</p><ul>" ;
+      for (const binding of response.results.bindings) {
+          message +=`<li> ${binding["var_compounds"].value} </li>`;
+      }
+      message += "</ul>"
+      isOK(message);                   
+    })
+    .catch( (error) => {
+        isKO(error)
+    } );
+
+    function isOK(message){
+    const iconElement = document.getElementById('status-icon');
+    const messageElement = document.getElementById('status-message');
+    iconElement.className = 'icon fas fa-check-circle';
+    iconElement.style.color = 'green';
+    messageElement.innerHTML = message;
+    messageElement.style.color = 'green';
+}
+
+function isKO(error){
+    const iconElement = document.getElementById('status-icon');
+    const messageElement = document.getElementById('status-message');
+    iconElement.className = 'icon fas fa-times-circle';
+    iconElement.style.color = 'red';
+    messageElement.textContent = error.message;
+    messageElement.style.color = 'red';
+}
+</script>
+</html>    

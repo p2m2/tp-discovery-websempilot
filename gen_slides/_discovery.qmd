@@ -1,0 +1,24 @@
+# Discovery
+
+## what is it ?
+>a software library which aims to ease the development of decision support tools exploiting omics RDF databases.
+
+## Integration
+
+* HTML
+```{.html code-line-numbers="1-4"}
+<script 
+  type="text/javascript" 
+  src="https://cdn.jsdelivr.net/gh/p2m2/discovery@0.4.3/dist/discovery-web.min.js"> 
+</script> 
+```
+
+* NPM package  
+    + Install
+    ```{.bash}
+    npm install @p2m2/discovery@0.2.0
+    ```  
+    + Use
+    ```{.js}
+    require("@p2m2/discovery");
+    ```

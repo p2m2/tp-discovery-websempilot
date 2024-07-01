@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UX</title>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/p2m2/discovery@0.4.3/dist/discovery-web.min.js"> </script> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+.progress-bar {
+            width: 0;
+            height: 30px;
+            background-color: #4caf50;
+            border-radius: 5px;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+        }
+</style>
+<body>
+
+  <div id="icon-container">
+      <i id="status-icon" class="icon fas fa-spinner fa-spin"></i>
+  </div>
+  
+  <div id="status-message"></div>
+
+  <h1>Resultats</h1>
+  <div class="progress-container">
+    <div class="progress-bar" id="progress-bar">0%</div>
+  </div>
+
+  <div id="data-container"></div>
+<nav>
+    <button onclick="load(currentPage+1)">Prev.</button> 
+    <button onclick="load(currentPage+1)">Next</button> 
+</nav>
+
+</body>
+
+<script>
+const showData = document.getElementById('data-container');
+const messageElement = document.getElementById('status-message');
+const rowsPerPage = 5;
+let currentPage = 0;
+let lazyLoadedPages = [];
+let nbPages = 0 ;
+let dataQuery = []; 
+var config = SWDiscoveryConfiguration
+    .init()
+    .setPageSize(rowsPerPage)
+    .sparqlEndpoint("https://forum.semantic-metabolomics.fr/sparql/");
+
+SWDiscovery(config)
+    .something()
+        .isObjectOf(URI("http://www.geneontology.org/formats/oboInOwl#inSubset"), "var_subject")
+            .datatype(URI("http://purl.obolibrary.org/obo/chebi/formula"),"var_formula")
+            .datatype(URI("http://purl.obolibrary.org/obo/chebi/mass"),"var_mass")
+            .datatype(URI("http://www.geneontology.org/formats/oboInOwl#id"), "var_id")
+    .selectByPage("var_subject", "var_formula", "var_mass", "var_id")
+    .then(async (response)=>{
+        nbPages = Object.values(response)[0]
+        lazyLoadedPages = Object.values(response)[1]
+        isOK("ready");
+        load(0);
+    })
+
+
+
+async function render(data) {
+    var html = '<ul>';
+    data.forEach((item) => {
+        html += `<li>${item.id}: FORM->${item.form} MASS-> ${item.mass}</li>` 
+    })
+    html += '</ul>';
+    showData.innerHTML = html
+}
+
+function load(indexPage){
+    if(indexPage < 0 || indexPage == nbPages){
+        return;
+    }
+    currentPage = indexPage
+    if(dataQuery[indexPage] != undefined)
+    {
+        render(dataQuery[indexPage]);
+        return;
+    }
+    lazyLoadedPages[indexPage]
+        .progression( (percent) => {
+            let progressBar = document.getElementById('progress-bar');
+            progressBar.style.width = percent*100 + '%';
+            progressBar.textContent = percent*100 + '%';
+        })
+        .requestEvent( (event) => {
+            messageElement.textContent = event;
+            messageElement.style.color = 'blue';
+        })
+        .commit()
+        .raw()
+        .then((response) => {
+            const result = []
+            for (let i=0;i<response.results.bindings.length;i++) {
+                let ref=response.results.bindings[i]["var_subject"].value;
+                let formula=" ";
+                if(response.results.datatypes["var_formula"][ref]!=undefined){
+                    formula = response.results.datatypes["var_formula"][ref][0].value;
+                }
+                
+                let mass = " ";
+                if(response.results.datatypes["var_mass"][ref]!=undefined){
+                    mass = response.results.datatypes["var_mass"][ref][0].value;
+                }
+                let id = " ";
+                if(response.results.datatypes["var_id"][ref]!=undefined){
+                    id = response.results.datatypes["var_id"][ref][0].value;
+                }
+                    result.push({id:id, mass:mass, form:formula});       
+            }
+            dataQuery.push(result);
+            render(result);
+        })
+}
+
+
+function isOK(message){
+    const iconElement = document.getElementById('status-icon');
+    const messageElement = document.getElementById('status-message');
+    iconElement.className = 'icon fas fa-check-circle';
+    iconElement.style.color = 'green';
+    messageElement.innerHTML = message;
+    messageElement.style.color = 'green';
+}
+
+function isKO(error){
+    const iconElement = document.getElementById('status-icon');
+    const messageElement = document.getElementById('status-message');
+    iconElement.className = 'icon fas fa-times-circle';
+    iconElement.style.color = 'red';
+    messageElement.textContent = error.message;
+    messageElement.style.color = 'red';
+}
+</script>
+</html>    

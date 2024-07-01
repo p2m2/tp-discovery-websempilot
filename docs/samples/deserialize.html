@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise Icon Update</title>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/p2m2/discovery@0.4.3/dist/discovery-web.min.js"> </script> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        .icon {
+            font-size: 2em;
+        }
+    </style>
+
+<body>
+
+  <div id="icon-container">
+      <i id="status-icon" class="icon fas fa-spinner fa-spin"></i>
+  </div>
+
+  <div id="status-message">En attente...</div>
+</body>
+  
+<script>
+    const iconElement = document.getElementById('status-icon');
+    const messageElement = document.getElementById('status-message');
+
+    let str = decodeURIComponent(`%7B%22config%22%3A%7B%22sources%22%3A%5B%7B%22id%22%3A%22-342170908%22%2C%22path%22%3A%22%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%40prefix%20mesh%3A%20%3Chttp%3A%2F%2Fid.nlm.nih.gov%2Fmesh%2F%3E%20.%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mesh%3AD005227%20%3Chttp%3A%2F%2Fmyapp%2Fis_selected%3E%20true%20.%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mesh%3AD002332%20%3Chttp%3A%2F%2Fmyapp%2Fis_selected%3E%20true%20.%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mesh%3AD005502%20%3Chttp%3A%2F%2Fmyapp%2Fis_selected%3E%20true%20.%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mesh%3AD009414%20%3Chttp%3A%2F%2Fmyapp%2Fis_selected%3E%20true%20.%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mesh%3AD009416%20%3Chttp%3A%2F%2Fmyapp%2Fis_selected%3E%20true%20.%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mesh%3AD009420%20%3Chttp%3A%2F%2Fmyapp%2Fis_selected%3E%20true%20.%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mesh%3AD009422%20%3Chttp%3A%2F%2Fmyapp%2Fis_selected%3E%20true%20.%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mesh%3AD009424%20%3Chttp%3A%2F%2Fmyapp%2Fis_selected%3E%20true%20.%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20mesh%3AD009431%20%3Chttp%3A%2F%2Fmyapp%2Fis_selected%3E%20true%20.%5Cn%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%22%2C%22sourcePath%22%3A%22Content%22%2C%22mimetype%22%3A%22text%2Fturtle%22%7D%2C%7B%22id%22%3A%22https%3A%2F%2Fraw.githubusercontent.com%2Fp2m2%2Ftp-discovery-websempilot%2Fmain%2Frdf%2Ftriples_assos_CHEBI_MESH_sub.ttl%22%2C%22path%22%3A%22https%3A%2F%2Fraw.githubusercontent.com%2Fp2m2%2Ftp-discovery-websempilot%2Fmain%2Frdf%2Ftriples_assos_CHEBI_MESH_sub.ttl%22%2C%22mimetype%22%3A%22text%2Fturtle%22%2C%22method%22%3A%22POST%22%7D%2C%7B%22id%22%3A%22https%3A%2F%2Fraw.githubusercontent.com%2Fp2m2%2Ftp-discovery-websempilot%2Fmain%2Frdf%2Ftriples_assos_MESH_MESH_sub.ttl%22%2C%22path%22%3A%22https%3A%2F%2Fraw.githubusercontent.com%2Fp2m2%2Ftp-discovery-websempilot%2Fmain%2Frdf%2Ftriples_assos_MESH_MESH_sub.ttl%22%2C%22mimetype%22%3A%22text%2Fturtle%22%2C%22method%22%3A%22POST%22%7D%2C%7B%22id%22%3A%22https%3A%2F%2Fraw.githubusercontent.com%2Fp2m2%2Ftp-discovery-websempilot%2Fmain%2Frdf%2Ftriples_assos_CID_MESH_sub.ttl%22%2C%22path%22%3A%22https%3A%2F%2Fraw.githubusercontent.com%2Fp2m2%2Ftp-discovery-websempilot%2Fmain%2Frdf%2Ftriples_assos_CID_MESH_sub.ttl%22%2C%22mimetype%22%3A%22text%2Fturtle%22%2C%22method%22%3A%22POST%22%7D%5D%7D%2C%22rootNode%22%3A%7B%22%24type%22%3A%22fr.inrae.metabohub.semantic_web.node.Root%22%2C%22idRef%22%3A%22c332974f-c4c5-468a-b984-426aa7ced938%22%2C%22prefixes%22%3A%7B%22rdf%22%3A%7B%22%24type%22%3A%22fr.inrae.metabohub.semantic_web.rdf.IRI%22%2C%22iri%22%3A%22http%3A%2F%2Fwww.w3.org%2F1999%2F02%2F22-rdf-syntax-ns%23%22%7D%2C%22rdfs%22%3A%7B%22%24type%22%3A%22fr.inrae.metabohub.semantic_web.rdf.IRI%22%2C%22iri%22%3A%22http%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%22%7D%2C%22xsd%22%3A%7B%22%24type%22%3A%22fr.inrae.metabohub.semantic_web.rdf.IRI%22%2C%22iri%22%3A%22http%3A%2F%2Fwww.w3.org%2F2001%2FXMLSchema%23%22%7D%2C%22owl%22%3A%7B%22%24type%22%3A%22fr.inrae.metabohub.semantic_web.rdf.IRI%22%2C%22iri%22%3A%22http%3A%2F%2Fwww.w3.org%2F2002%2F07%2Fowl%23%22%7D%2C%22skos%22%3A%7B%22%24type%22%3A%22fr.inrae.metabohub.semantic_web.rdf.IRI%22%2C%22iri%22%3A%22http%3A%2F%2Fwww.w3.org%2F2004%2F02%2Fskos%2Fcore%23%22%7D%2C%22chebi%22%3A%7B%22%24type%22%3A%22fr.inrae.metabohub.semantic_web.rdf.IRI%22%2C%22iri%22%3A%22http%3A%2F%2Fpurl.obolibrary.org%2Fobo%2FCHEBI_%22%7D%7D%2C%22children%22%3A%5B%7B%22%24type%22%3A%22fr.inrae.metabohub.semantic_web.node.Something%22%2C%22idRef%22%3A%22metabolite%22%2C%22children%22%3A%5B%7B%22%24type%22%3A%22fr.inrae.metabohub.semantic_web.node.SubjectOf%22%2C%22idRef%22%3A%22objetMeshTerm%22%2C%22term%22%3A%7B%22%24type%22%3A%22fr.inrae.metabohub.semantic_web.rdf.URI%22%2C%22localNameUser%22%3A%22skos%3Arelated%22%7D%2C%22children%22%3A%5B%7B%22%24type%22%3A%22fr.inrae.metabohub.semantic_web.node.SubjectOf%22%2C%22idRef%22%3A%22object2%22%2C%22term%22%3A%7B%22%24type%22%3A%22fr.inrae.metabohub.semantic_web.rdf.URI%22%2C%22localNameUser%22%3A%22%3Chttp%3A%2F%2Fmyapp%2Fis_selected%3E%22%7D%2C%22children%22%3A%5B%7B%22%24type%22%3A%22fr.inrae.metabohub.semantic_web.node.Value%22%2C%22term%22%3A%7B%22%24type%22%3A%22fr.inrae.metabohub.semantic_web.rdf.Literal%22%2C%22value%22%3A%22true%22%2C%22datatype%22%3A%7B%22%24type%22%3A%22fr.inrae.metabohub.semantic_web.rdf.URI%22%2C%22localNameUser%22%3A%22xsd%3Aboolean%22%7D%7D%2C%22idRef%22%3A%22009dcf28-cda5-4a50-8a70-fced2043624e%22%7D%5D%7D%5D%7D%5D%2C%22decorations%22%3A%7B%22info%22%3A%22Metabolites%20qui%20sont%20reli%C3%A9s%20%C3%A0%20mesh%3AD005227%22%7D%7D%5D%7D%2C%22fn%22%3A%22object2%22%7D `)
+    
+    let objDiscovery = SWDiscovery().setSerializedString(str)
+    
+    let info_metabolite = objDiscovery.focus("metabolite").getDecoration("info");
+
+    objDiscovery
+        .select("metabolite","objetMeshTerm")
+            .commit()
+            .raw()
+            .then((response) => {
+            iconElement.className = 'icon fas fa-check-circle';
+            iconElement.style.color = 'green';
+            
+            let message = `${info_metabolite} <br> <ul>`
+            for (const binding of response.results.bindings) {
+                message +=`<li> ${binding["objetMeshTerm"].value} object of  ${binding["metabolite"].value} </li>`;
+            }
+            message += "</ul>"
+            messageElement.innerHTML = message;
+            messageElement.style.color = 'green';
+            }
+        ).catch( (error) => {
+            iconElement.className = 'icon fas fa-times-circle';
+            iconElement.style.color = 'red';
+            messageElement.textContent = error;
+            messageElement.style.color = 'red';
+        } );
+ </script>
+ </html>    

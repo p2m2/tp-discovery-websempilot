@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Count Ressources</title>
+
+<script 
+    type="text/javascript" 
+    src="https://cdn.jsdelivr.net/gh/p2m2/discovery@0.4.3/dist/discovery-web.min.js"> 
+</script> 
+<link 
+    rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+>
+<style>
+    .icon {
+        font-size: 2em;
+    }
+</style>
+
+<body>
+  <div id="icon-container">
+      <i id="status-icon" class="icon fas fa-spinner fa-spin"></i>
+  </div>
+  <div id="status-message">En attente...</div>
+</body>
+  
+<script>
+    var config = SWDiscoveryConfiguration
+        .init()
+        .urlFile("https://raw.githubusercontent.com/p2m2/tp-discovery-websempilot/main/rdf/triples_assos_CID_MESH_sub.ttl");
+
+    SWDiscovery(config)
+        .something("allRessources")
+        .select("allRessources")
+            .commit()
+            .raw()
+            .then((response) => {                
+                message = "count: "+response.results.bindings.length ;
+                isOK(message)                
+            }
+        ).catch( (error) => {
+            isKO(error)
+        } );
+
+
+        function isOK(message){
+    const iconElement = document.getElementById('status-icon');
+    const messageElement = document.getElementById('status-message');
+    iconElement.className = 'icon fas fa-check-circle';
+    iconElement.style.color = 'green';
+    messageElement.innerHTML = message;
+    messageElement.style.color = 'green';
+}
+
+function isKO(error){
+    const iconElement = document.getElementById('status-icon');
+    const messageElement = document.getElementById('status-message');
+    iconElement.className = 'icon fas fa-times-circle';
+    iconElement.style.color = 'red';
+    messageElement.textContent = error.message;
+    messageElement.style.color = 'red';
+}
+</script>
+</html>    
